@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     receiverName: { type: String, required: true }, //tên nhận hàng
     phone: { type: String, required: true }, //số điện thoại
     shippingAddress: { type: String, required: true }, //địa chỉ nhận hàng
@@ -22,7 +22,8 @@ const OrderSchema = new mongoose.Schema({
         enum: ["pending", "confirmed", "shipping", "delivered", "cancelled"],
         default: "pending"
     },
-
+    note: { type: String },
+    expiresAt: { type: Date }, // Thời điểm hết hạn thanh toán (dùng cho VNPay)
 }, { timestamps: true });
 
 module.exports = mongoose.model("Order", OrderSchema);

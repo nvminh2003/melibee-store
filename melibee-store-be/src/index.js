@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-// const routes = require("./routes");
+const routes = require("./routes");
 const connectDB = require("./config/connectDB");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 dotenv.config();
 // const passport = require('./config/passport');
 const session = require('express-session');
+require('./services/orderTimeoutJob');
 
 const app = express();
 const port = process.env.PORT || 9999;
@@ -40,7 +41,7 @@ app.use(session({
 // app.use(passport.initialize());
 // app.use(passport.session());
 
-// routes(app);
+app.use("/api", routes);
 
 const http = require("http");
 const server = http.createServer(app);
